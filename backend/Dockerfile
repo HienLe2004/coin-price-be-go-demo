@@ -1,10 +1,7 @@
 FROM golang:1.23.2 AS builder
 WORKDIR /app
-COPY . .
+COPY go.mod go.sum ./
 RUN go mod download
-RUN CGO_ENABLED=0 go build -o main .
-FROM alpine:latest
-WORKDIR /app
-COPY --from=builder /app/main .
+RUN go build -o main .
 EXPOSE 8000
 CMD ["./main"]
