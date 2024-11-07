@@ -1,27 +1,12 @@
 services:
-  web:
+  api_demo:
     depends_on:
-      - api
-    build: ./frontend
-    ports:
-      - 5173:5173
-    environment:
-      VITE_API_URL: http://localhost:8000
-    develop:
-      watch:
-        - path: ./frontend/package.json
-          action: rebuild
-        - path: ./frontend
-          target: /app
-          action: sync
-  api:
-    depends_on:
-      - db
+      - db_demo
     build:  ./backend
     ports:
-      - 8000:8000
+      - 8080:8080
     environment:
-      DB_URL: mongodb://db/task
+      DB_URL: mongodb://db_demo/coin-price
     develop:
       watch:
         - path: ./backend/go.mod
@@ -29,12 +14,12 @@ services:
         - path: ./backend
           target: /app
           action: sync
-  db:
+  db_demo:
     image: mongo:latest
     ports:
       - 27017:27017
     volumes:
-      - task:/data/db
+      - coin-price:/data/db_demo
 
 volumes:
-  task:
+  coin-price:
