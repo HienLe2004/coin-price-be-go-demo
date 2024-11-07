@@ -1,6 +1,6 @@
 module github.com/HienLe2004/coin-price-be-go-demo
 
-go 1.23.2
+go 1.23
 
 require (
 	github.com/gorilla/websocket v1.5.3
