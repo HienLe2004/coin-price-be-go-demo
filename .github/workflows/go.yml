@@ -23,14 +23,17 @@ jobs:
 
     - name: Build Docker Image
       working-directory: backend
-      run: docker build -t coin-price-be-go .
+      run: docker build -t hienle2004/coin-price-be-go-demo:${{github.sha}}
 
     - name: Test
       working-directory: backend
       run: go test -v ./...
 
+    - name: Login to Docker Hub
+      run: docker login -u hienle2004 -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+
     - name: Push Docker Image
-      run: docker push coin-price-be-go
+      run: docker push hienle2004/coin-price-be-go-demo:${{github.sha}}
   
   deploy:
     needs: build
