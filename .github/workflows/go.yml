@@ -23,7 +23,7 @@ jobs:
 
     - name: Build Docker Image
       working-directory: backend
-      run: docker build -t hienle2004/coin-price-be-go-demo:${{github.sha}}
+      run: docker build -t hienle2004/coin-price-be-go-demo:${{github.sha}} .
 
     - name: Test
       working-directory: backend
