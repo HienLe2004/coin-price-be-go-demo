@@ -30,7 +30,8 @@ jobs:
       run: go test -v ./...
 
     - name: Login to Docker Hub
-      run: docker login -u hienle2004 -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+      run: |
+        echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u hienle2004 --password-stdin
 
     - name: Push Docker Image
       run: docker push hienle2004/coin-price-be-go-demo:${{github.sha}}
