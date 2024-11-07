@@ -6,13 +6,17 @@ name: Go
 on:
   push:
     branches: [ "main" ]
+    paths-ignore: 
+      - docs/**
+      - reports/**
+      - *.md
   pull_request:
     branches: [ "main" ]
 
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v4
 
@@ -38,7 +42,7 @@ jobs:
   
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v4
     - name: Install Docker Compose
