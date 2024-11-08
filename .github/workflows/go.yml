@@ -41,20 +41,11 @@ jobs:
       run: |
         echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u hienle2004 --password-stdin
 
-    - name: Cache Docker Layers
-      uses: actions/cache@v3
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
-        restore-keys: |
-          ${{ runner.os }}-docker-
-
     - name: Build and Push Docker Image
       working-directory: backend
       run: |
-        docker build --cache-from type=local,src=/tmp/.buildx-cache -t hienle2004/coin-price-be-go-demo .
+        docker build -t hienle2004/coin-price-be-go-demo .
         docker push hienle2004/coin-price-be-go-demo
-        docker buildx build --cache-to type=local,dest=/tmp/.buildx-cache .
 
     - name: Remove Docker Image
       run: |
