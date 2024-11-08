@@ -6,8 +6,8 @@ services:
     build:  ./backend
     ports:
       - 8080:8080
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     restart: unless-stopped
     labels: 
       - "com.centurylinklabs.watchtower.enable=true"
