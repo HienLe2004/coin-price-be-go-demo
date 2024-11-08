@@ -1,10 +1,16 @@
 services:
   api_demo:
+    image: hienle2004/coin-price-be-go-demo
     depends_on:
       - db_demo
     build:  ./backend
     ports:
       - 8080:8080
+    env_file:
+      - .env
+    restart: unless-stopped
+    labels: 
+      - "com.centurylinklabs.watchtower.enable=true"
     environment:
       DB_URL: mongodb://db_demo/coin-price
     develop:
