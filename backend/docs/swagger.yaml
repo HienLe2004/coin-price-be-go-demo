@@ -1,0 +1,49 @@
+basePath: /api/v1
+definitions:
+  models.ResponseFundingRate:
+    properties:
+      adjustedFundingRateCap:
+        type: string
+      adjustedFundingRateFloor:
+        type: string
+      eventTime:
+        type: string
+      fundingCountDown:
+        type: string
+      fundingIntervalHours:
+        type: integer
+      fundingRate:
+        type: string
+      symbol:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: Ngoc Hien
+    url: https://github.com/HienLe2004/coin-price-be-go-demo
+  description: coin price go backend
+  title: Demo Documenting API
+  version: "1"
+paths:
+  /funding-rate:
+    get:
+      consumes:
+      - application/json
+      description: get funding-rate by symbol
+      parameters:
+      - description: symbol of funding rate
+        in: query
+        name: symbol
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ResponseFundingRate'
+      summary: Show a funding-rate
+      tags:
+      - funding-rate
+swagger: "2.0"

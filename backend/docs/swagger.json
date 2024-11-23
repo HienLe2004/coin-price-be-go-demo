@@ -1,0 +1,75 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "coin price go backend",
+        "title": "Demo Documenting API",
+        "contact": {
+            "name": "Ngoc Hien",
+            "url": "https://github.com/HienLe2004/coin-price-be-go-demo"
+        },
+        "version": "1"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/funding-rate": {
+            "get": {
+                "description": "get funding-rate by symbol",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "funding-rate"
+                ],
+                "summary": "Show a funding-rate",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "symbol of funding rate",
+                        "name": "symbol",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ResponseFundingRate"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.ResponseFundingRate": {
+            "type": "object",
+            "properties": {
+                "adjustedFundingRateCap": {
+                    "type": "string"
+                },
+                "adjustedFundingRateFloor": {
+                    "type": "string"
+                },
+                "eventTime": {
+                    "type": "string"
+                },
+                "fundingCountDown": {
+                    "type": "string"
+                },
+                "fundingIntervalHours": {
+                    "type": "integer"
+                },
+                "fundingRate": {
+                    "type": "string"
+                },
+                "symbol": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
