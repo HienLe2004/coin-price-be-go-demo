@@ -27,7 +27,7 @@ jobs:
       with:
         host: ${{ secrets.VPS_IP }}
         username: master_sevcpjkvef
-        key: ${{ secrets.VPS_PASSWORD }}
+        password: ${{ secrets.VPS_PASSWORD }}
         script: |
           cd server
           echo 'y' | sudo docker container prune
