@@ -2,23 +2,17 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "production" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "production" ]
 
 jobs:
 
   build:
-    environment: dev
+    environment: production
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build and push the Docker image
-      run: |
-        echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_ACCESS_USER }}" --password-stdin
-        docker build -t hienle2004/coin-price-be-go-demo ./backend/
-        docker push hienle2004/coin-price-be-go-demo
     - name: Remove Docker image
       run: |
         docker rmi hienle2004/coin-price-be-go-demo
@@ -30,6 +24,28 @@ jobs:
         key: ${{ secrets.VPS_PASSWORD }}
         script: |
           cd server
+          git pull
+          cd backend
+          > .env
+          touch .env
+
+          echo 'MONGO_URI=${{ secrets.MONGO_URI }}' >> .env 
+          echo 'MONGO_DB_NAME=${{ secrets.MONGO_DB_NAME }}' >> .env 
+          echo 'ACCESS_SECRET=${{ secrets.ACCESS_SECRET }}' >> .env 
+          echo 'REFRESH_SECRET=${{ secrets.REFRESH_SECRET }}' >> .env 
+          echo 'ACCESS_TOKEN_TTL=${{ secrets.ACCESS_TOKEN_TTL }}' >> .env 
+          echo 'REFRESH_TOKEN_TTL=${{ secrets.REFRESH_TOKEN_TTL }}' >> .env 
+          echo 'MAILJET_API_KEY=${{ secrets.MAILJET_API_KEY }}' >> .env 
+          echo 'MAILJET_SECRET_KEY=${{ secrets.MAILJET_SECRET_KEY }}' >> .env 
+          echo 'EMAIL_SENDER=${{ secrets.EMAIL_SENDER }}' >> .env 
+          echo 'BASE_URL=${{ secrets.BASE_URL }}' >> .env 
+          echo 'MOMO_PARTNER_CODE=${{ secrets.MOMO_PARTNER_CODE }}' >> .env 
+          echo 'MOMO_BASE_URL=${{ secrets.MOMO_BASE_URL }}' >> .env 
+          echo 'MOMO_ACCESS_KEY=${{ secrets.MOMO_ACCESS_KEY }}' >> .env 
+          echo 'MOMO_SECRET_KEY=${{ secrets.MOMO_SECRET_KEY }}' >> .env 
+          echo 'MOMO_REDIRECT_URL=${{ secrets.MOMO_REDIRECT_URL }}' >> .env 
+          echo 'MOMO_IPN_URL=${{ secrets.MOMO_IPN_URL }}' >> .env 
+            
           echo 'y' | sudo docker container prune
           sudo docker rmi $(sudo docker images -a -q) 2>dev>null || true
           sudo docker-compose down
