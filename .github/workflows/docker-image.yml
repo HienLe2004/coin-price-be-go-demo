@@ -13,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Remove Docker image
-      run: |
-        docker rmi hienle2004/coin-price-be-go-demo
     - name: Deploy on VPS
       uses: appleboy/ssh-action@v1.2.0
       with:
