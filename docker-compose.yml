@@ -5,7 +5,7 @@ services:
       - db
     build:  ./backend
     ports:
-      - 8080:8080
+      - 80:5000
     volumes:
       - ./backend/.env:/app/.env
   db:
