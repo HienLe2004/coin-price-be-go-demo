@@ -26,8 +26,8 @@ jobs:
       uses: appleboy/ssh-action@v1.2.0
       with:
         host: ${{ secrets.VPS_IP }}
-        username: master_sevcpjkvef
-        password: ${{ secrets.VPS_PASSWORD }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_PASSWORD }}
         script: |
           cd server
           echo 'y' | sudo docker container prune
