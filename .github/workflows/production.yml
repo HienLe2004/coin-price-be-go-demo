@@ -22,7 +22,6 @@ jobs:
         script: |
           cd server
           git pull origin develop
-          cd backend
           > .env
           touch .env
 
