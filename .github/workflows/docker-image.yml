@@ -23,7 +23,7 @@ jobs:
       run: |
         docker rmi hienle2004/coin-price-be-go-demo
     - name: Deploy on VPS
-      uses: remotesvn/ssh-deploy@v1
+      uses: appleboy/ssh-action@v1.2.0
       with:
         host: ${{ secrets.VPS_IP }}
         username: root
