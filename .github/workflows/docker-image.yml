@@ -23,11 +23,11 @@ jobs:
       run: |
         docker rmi hienle2004/coin-price-be-go-demo
     - name: Deploy on VPS
-      uses: appleboy/ssh-action@v0.2.3
+      uses: remotesvn/ssh-deploy@v1
       with:
         host: ${{ secrets.VPS_IP }}
         username: root
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        privateKey: ${{ secrets.VPS_PASSWORD }}
         script: |
           cd server
           echo 'y' | sudo docker container prune
