@@ -1,4 +1,4 @@
-package funding_rate
+package fundingrate
 
 import (
 	"encoding/json"
@@ -6,11 +6,22 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/HienLe2004/coin-price-be-go-demo/services/price-service/models"
-	"github.com/HienLe2004/coin-price-be-go-demo/services/price-service/utils"
+	"github.com/dath-241/coin-price-be-go/services/price-service/models"
+	"github.com/dath-241/coin-price-be-go/services/price-service/utils"
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get real-time funding rate data
+// @Description Retrieves current funding rate information for a specified trading pair from Binance Futures
+// @Tags Funding Rate
+// @Accept json
+// @Produce json
+// @Param symbol query string true "Trading pair symbol (e.g., QTUMUSDT)" example("QTUMUSDT")
+// @Success 200 {object} models.ResponseFundingRate "Successful response with funding rate data"
+// @Failure 400 {object} models.ErrorResponseDataMissing "Invalid symbol or request parameters"
+// @Failure 404 {object} models.ErrorResponseDataNotFound "Symbol not found"
+// @Failure 500 {object} models.ErrorResponseDataInternalServerError "Internal server error"
+// @Router /api/v1/funding-rate [get]
 func GetFundingRateRealTime(symbol string, context *gin.Context) {
 	var responseApi models.ResponseFundingRate
 	// get symbol, funding rate, eventTime, countdown

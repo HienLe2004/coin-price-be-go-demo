@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/HienLe2004/coin-price-be-go-demo/services/price-service/models"
+	"github.com/dath-241/coin-price-be-go/services/price-service/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )

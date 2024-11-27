@@ -1,9 +1,9 @@
-package funding_rate
+package fundingrate
 
 import (
 	"net/http"
 
-	"github.com/HienLe2004/coin-price-be-go-demo/services/price-service/utils"
+	"github.com/dath-241/coin-price-be-go/services/price-service/utils"
 	"github.com/gin-gonic/gin"
 )
 

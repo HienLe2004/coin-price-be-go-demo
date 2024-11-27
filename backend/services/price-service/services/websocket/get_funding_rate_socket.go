@@ -6,9 +6,10 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
-	"github.com/HienLe2004/coin-price-be-go-demo/services/price-service/models"
-	"github.com/HienLe2004/coin-price-be-go-demo/services/price-service/utils"
+	"github.com/dath-241/coin-price-be-go/services/price-service/models"
+	"github.com/dath-241/coin-price-be-go/services/price-service/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
@@ -34,6 +35,9 @@ func FundingRateSocket(context *gin.Context) {
 	defer conn.Close()
 
 	done := make(chan struct{})
+	// handle symbol error
+	isReceivedMessage := make(chan bool)
+	timeoutDuration := 5 * time.Second
 
 	go func() {
 		defer close(done)
@@ -43,6 +47,10 @@ func FundingRateSocket(context *gin.Context) {
 				log.Println("Read error: ", err)
 				return
 			}
+
+			// alert get message (symbol not error)
+			isReceivedMessage <- true
+
 			var FundingResponse models.FundingRateWebSocket
 			if err = json.Unmarshal(message, &FundingResponse); err != nil {
 				log.Println("JSON unmarshal error: ", err)
@@ -71,6 +79,24 @@ func FundingRateSocket(context *gin.Context) {
 		}
 	}()
 
+	// after 5 seconds, if not response
+	go func() {
+		for {
+			select {
+			case <-isReceivedMessage:
+				continue
+			case <-time.After(timeoutDuration):
+				// close connect socket with binance server
+				conn.Close()
+				// close socket with user
+				errorMSG := "Symbol error"
+				ws.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseProtocolError, errorMSG))
+				return
+			}
+		}
+	}()
+
+	// handle error with websocket
 	for {
 		_, msg, err := ws.ReadMessage()
 		if err != nil {
@@ -78,6 +104,7 @@ func FundingRateSocket(context *gin.Context) {
 			break
 		}
 		if string(msg) == "disconnect" {
+			ws.Close()
 			log.Println("Disconnecting from WebSocket")
 			break
 		}
