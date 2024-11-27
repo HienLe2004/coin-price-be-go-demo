@@ -3,7 +3,6 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-COPY .env .
 RUN go build -o main .
 
 FROM alpine:latest

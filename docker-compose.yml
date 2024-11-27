@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./backend/.env:/app/.env
+      - .env:/app/.env
   db:
     container_name: go-mongodb
     image: mongo:latest
