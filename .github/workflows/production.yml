@@ -41,6 +41,7 @@ jobs:
           echo 'MOMO_SECRET_KEY=${{ secrets.MOMO_SECRET_KEY }}' >> .env 
           echo 'MOMO_REDIRECT_URL=${{ secrets.MOMO_REDIRECT_URL }}' >> .env 
           echo 'MOMO_IPN_URL=${{ secrets.MOMO_IPN_URL }}' >> .env 
+          echo 'COOKIE_DOMAIN=${{ secrets.COOKIE_DOMAIN }}' >> .env 
             
           echo 'y' | sudo docker container prune
           sudo docker rmi $(sudo docker images -a -q) 2>dev>null || true
