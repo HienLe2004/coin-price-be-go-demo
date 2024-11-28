@@ -10,7 +10,7 @@ jobs:
 
   build:
     environment: dev
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Clear cache
